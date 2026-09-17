@@ -1,0 +1,298 @@
+type VerificationStatus = 
+ variant {
+   none;
+   official;
+   verified;
+ };
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserId = principal;
+type UnitStatus = 
+ variant {
+   available;
+   "reserved";
+   sold;
+ };
+type Timestamp = int;
+type Review = 
+ record {
+   agentId: nat;
+   categories: RatingCategory;
+   comment: text;
+   createdAt: Timestamp;
+   id: nat;
+   rating: nat;
+   reported: bool;
+   reviewerId: UserId;
+ };
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type RatingCategory = 
+ record {
+   followUp: nat;
+   info: nat;
+   politeness: nat;
+   "service": nat;
+   speed: nat;
+   trust: nat;
+ };
+type ProjectStatus = 
+ variant {
+   completed;
+   new;
+   ongoing;
+ };
+type ProjectFilter = 
+ record {
+   bedrooms: opt nat;
+   district: opt text;
+   houseType: opt text;
+   location: opt text;
+   maxPrice: opt nat;
+   minPrice: opt nat;
+   name: opt text;
+   newProject: opt bool;
+   promotion: opt bool;
+   province: opt text;
+   readyToMove: opt bool;
+   usableArea: opt nat;
+ };
+type Project = 
+ record {
+   coordinates: Coordinates;
+   createdAt: Timestamp;
+   houseTypes: vec text;
+   id: nat;
+   images: vec text;
+   location: Location;
+   name: text;
+   projectStatus: ProjectStatus;
+   promotions: vec text;
+   reviewRating: float64;
+   startingPrice: nat;
+   unitCount: nat;
+   unitStatus: UnitStatus;
+   verificationStatus: VerificationStatus;
+   video: opt text;
+ };
+type Post = 
+ record {
+   agentId: opt nat;
+   authorId: UserId;
+   commentCount: nat;
+   createdAt: Timestamp;
+   id: nat;
+   image: opt text;
+   interestedCount: nat;
+   likeCount: nat;
+   location: opt Location;
+   price: opt nat;
+   projectId: opt nat;
+   saveCount: nat;
+   shareCount: nat;
+ };
+type Notification = 
+ record {
+   createdAt: Timestamp;
+   id: nat;
+   message: text;
+   read: bool;
+   userId: UserId;
+ };
+type Location = 
+ record {
+   district: text;
+   province: text;
+   subDistrict: text;
+ };
+type HouseStatus = 
+ variant {
+   readyToMove;
+   underConstruction;
+ };
+type House = 
+ record {
+   bathrooms: nat;
+   bedrooms: nat;
+   floorPlan: opt text;
+   gallery: vec text;
+   houseType: text;
+   id: nat;
+   parking: nat;
+   price: nat;
+   projectId: nat;
+   status: HouseStatus;
+   usableArea: nat;
+   video: opt text;
+ };
+type Favorite = 
+ record {
+   agents: vec nat;
+   houseTypes: vec text;
+   houses: vec nat;
+   projects: vec nat;
+   savedPosts: vec nat;
+   userId: UserId;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type Coordinates = 
+ record {
+   lat: float64;
+   lng: float64;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type AppointmentStatus = 
+ variant {
+   cancelled;
+   completed;
+   confirmed;
+   pending;
+ };
+type Appointment = 
+ record {
+   agentId: opt nat;
+   date: Timestamp;
+   houseId: opt nat;
+   houseType: opt text;
+   id: nat;
+   name: text;
+   phone: text;
+   projectId: nat;
+   status: AppointmentStatus;
+   time: Timestamp;
+   userId: UserId;
+   visitors: nat;
+ };
+type Agent = 
+ record {
+   agentCode: text;
+   customerCount: nat;
+   experience: nat;
+   id: nat;
+   listedHomes: vec nat;
+   managedProjects: vec nat;
+   name: text;
+   photo: opt text;
+   portfolio: vec text;
+   rating: float64;
+   ratingCategories: RatingCategory;
+   reviewCount: nat;
+   serviceArea: text;
+   userId: UserId;
+   verified: bool;
+ };
+type AdminMetrics = 
+ record {
+   agents: nat;
+   appointments: nat;
+   conversions: nat;
+   customers: nat;
+   houses: nat;
+   leads: nat;
+   liveViewers: nat;
+   members: nat;
+   posts: nat;
+   projects: nat;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  addAgent: (agent: Agent) -> (nat);
+  addFavoriteAgent: (agentId: nat) -> ();
+  addFavoriteHouse: (houseId: nat) -> ();
+  addFavoriteHouseType: (houseType: text) -> ();
+  addFavoriteProject: (projectId: nat) -> ();
+  addHouse: (house: House) -> (nat);
+  addPost: (post: Post) -> (nat);
+  addProject: (project: Project) -> (nat);
+  addReview: (review: Review) -> (nat);
+  addSavedPost: (postId: nat) -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  bookAppointment: (appointment: Appointment) -> (nat);
+  cancelAppointment: (id: nat) -> ();
+  commentPost: (id: nat) -> ();
+  confirmAppointment: (id: nat) -> ();
+  deleteAgent: (id: nat) -> ();
+  deleteHouse: (id: nat) -> ();
+  deleteProject: (id: nat) -> ();
+  execute: (qJson: text) -> (Result) query;
+  getAdminMetrics: () -> (AdminMetrics) query;
+  getAgent: (id: nat) -> (opt Agent) query;
+  getApiDoc: () -> (text) query;
+  getAppointment: (id: nat) -> (opt Appointment) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getFavorites: () -> (Favorite) query;
+  getHouse: (id: nat) -> (opt House) query;
+  getPost: (id: nat) -> (opt Post) query;
+  getProject: (id: nat) -> (opt Project) query;
+  isCallerAdmin: () -> (bool) query;
+  likePost: (id: nat) -> ();
+  listAgents: () -> (vec Agent) query;
+  listAppointments: () -> (vec Appointment) query;
+  listHouses: (projectId: opt nat) -> (vec House) query;
+  listNotifications: () -> (vec Notification) query;
+  listPosts: () -> (vec Post) query;
+  listProjects: (filter: ProjectFilter) -> (vec Project) query;
+  listReviews: (agentId: nat) -> (vec Review) query;
+  markNotificationRead: (id: nat) -> ();
+  removeFavoriteAgent: (agentId: nat) -> ();
+  removeFavoriteHouse: (houseId: nat) -> ();
+  removeFavoriteHouseType: (houseType: text) -> ();
+  removeFavoriteProject: (projectId: nat) -> ();
+  removeSavedPost: (postId: nat) -> ();
+  reportReview: (id: nat) -> ();
+  savePost: (id: nat) -> ();
+  schema: () -> (text) query;
+  sharePost: (id: nat) -> ();
+  smartSearch: (q: text) -> (vec Project) query;
+  updateAgent: (agent: Agent) -> ();
+  updateHouse: (house: House) -> ();
+  updateProject: (project: Project) -> ();
+}

@@ -1,0 +1,360 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__386906547<Principal, UserRole__91647283>
+  };
+type Agent__1057665819 =
+  {
+    agentCode : Text;
+    customerCount : Nat;
+    experience : Nat;
+    id : Nat;
+    listedHomes : [Nat];
+    managedProjects : [Nat];
+    name : Text;
+    photo : ?Text;
+    portfolio : [Text];
+    rating : Float;
+    ratingCategories : RatingCategory__1011895668;
+    reviewCount : Nat;
+    serviceArea : Text;
+    userId : Principal;
+    verified : Bool
+  };
+type Agent__113294022 =
+  {
+    agentCode : Text;
+    customerCount : Nat;
+    experience : Nat;
+    id : Nat;
+    listedHomes : [Nat];
+    managedProjects : [Nat];
+    name : Text;
+    photo : ?Text;
+    portfolio : [Text];
+    rating : Float;
+    ratingCategories : RatingCategory__185711958;
+    reviewCount : Nat;
+    serviceArea : Text;
+    userId : UserId__158757552;
+    verified : Bool
+  };
+type AppointmentStatus__679172861 =
+  {#cancelled; #completed; #confirmed; #pending};
+type AppointmentStatus__90458101 =
+  {#cancelled; #completed; #confirmed; #pending};
+type Appointment__616535902 =
+  {
+    agentId : ?Nat;
+    date : Int;
+    houseId : ?Nat;
+    houseType : ?Text;
+    id : Nat;
+    name : Text;
+    phone : Text;
+    projectId : Nat;
+    status : AppointmentStatus__90458101;
+    time : Int;
+    userId : Principal;
+    visitors : Nat
+  };
+type Appointment__77617247 =
+  {
+    agentId : ?Nat;
+    date : Timestamp__301639476;
+    houseId : ?Nat;
+    houseType : ?Text;
+    id : Nat;
+    name : Text;
+    phone : Text;
+    projectId : Nat;
+    status : AppointmentStatus__679172861;
+    time : Timestamp__301639476;
+    userId : UserId__158757552;
+    visitors : Nat
+  };
+type Coordinates__1064770659 = {lat : Float; lng : Float};
+type Coordinates__987271280 = {lat : Float; lng : Float};
+type Data__265875254<K, V> = {var count : Nat__58649523; kvs : [var ?(K, V)]};
+type Favorite__263231092 =
+  {
+    agents : [Nat];
+    houseTypes : [Text];
+    houses : [Nat];
+    projects : [Nat];
+    savedPosts : [Nat];
+    userId : UserId__158757552
+  };
+type Favorite__874073279 =
+  {
+    agents : [Nat];
+    houseTypes : [Text];
+    houses : [Nat];
+    projects : [Nat];
+    savedPosts : [Nat];
+    userId : Principal
+  };
+type HouseStatus__645302922 = {#readyToMove; #underConstruction};
+type HouseStatus__947958239 = {#readyToMove; #underConstruction};
+type House__158392516 =
+  {
+    bathrooms : Nat;
+    bedrooms : Nat;
+    floorPlan : ?Text;
+    gallery : [Text];
+    houseType : Text;
+    id : Nat;
+    parking : Nat;
+    price : Nat;
+    projectId : Nat;
+    status : HouseStatus__645302922;
+    usableArea : Nat;
+    video : ?Text
+  };
+type House__586800349 =
+  {
+    bathrooms : Nat;
+    bedrooms : Nat;
+    floorPlan : ?Text;
+    gallery : [Text];
+    houseType : Text;
+    id : Nat;
+    parking : Nat;
+    price : Nat;
+    projectId : Nat;
+    status : HouseStatus__947958239;
+    usableArea : Nat;
+    video : ?Text
+  };
+type Internal__161573640<K, V> =
+  {children : [var ?Node__430031793<K, V>]; data : Data__265875254<K, V>};
+type Leaf__1045638083<K, V> = {data : Data__265875254<K, V>};
+type Location__298141989 =
+  {district : Text; province : Text; subDistrict : Text};
+type Location__847735819 =
+  {district : Text; province : Text; subDistrict : Text};
+type Map__13625999<K, V> =
+  {var root : Node__430031793<K, V>; var size : Nat__58649523};
+type Map__386906547<K, V> = Map__670138087<K, V>;
+type Map__670138087<K, V> = Map__13625999<K, V>;
+type Nat__58649523 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__643105068 =
+  {
+    accessControlState : AccessControlState__201339279;
+    agents : Map__386906547<Nat, Agent__1057665819>;
+    appointments : Map__386906547<Nat, Appointment__616535902>;
+    favorites : Map__386906547<Principal, Favorite__874073279>;
+    houses : Map__386906547<Nat, House__586800349>;
+    notifications : Map__386906547<Nat, Notification__45249968>;
+    posts : Map__386906547<Nat, Post__907313497>;
+    projects : Map__386906547<Nat, Project__246066733>;
+    reviews : Map__386906547<Nat, Review__283627580>;
+    state :
+      {
+        var nextAgentId : Nat;
+        var nextAppointmentId : Nat;
+        var nextHouseId : Nat;
+        var nextNotificationId : Nat;
+        var nextPostId : Nat;
+        var nextProjectId : Nat;
+        var nextReviewId : Nat
+      }
+  };
+type Node__430031793<K, V> =
+  {#internal : Internal__161573640<K, V>; #leaf : Leaf__1045638083<K, V>};
+type Notification__264708741 =
+  {
+    createdAt : Timestamp__301639476;
+    id : Nat;
+    message : Text;
+    read : Bool;
+    userId : UserId__158757552
+  };
+type Notification__45249968 =
+  {
+    createdAt : Int;
+    id : Nat;
+    message : Text;
+    read : Bool;
+    userId : Principal
+  };
+type OldActor__198916528 = {};
+type Post__495728462 =
+  {
+    agentId : ?Nat;
+    authorId : UserId__158757552;
+    commentCount : Nat;
+    createdAt : Timestamp__301639476;
+    id : Nat;
+    image : ?Text;
+    interestedCount : Nat;
+    likeCount : Nat;
+    location : ?Location__847735819;
+    price : ?Nat;
+    projectId : ?Nat;
+    saveCount : Nat;
+    shareCount : Nat
+  };
+type Post__907313497 =
+  {
+    agentId : ?Nat;
+    authorId : Principal;
+    commentCount : Nat;
+    createdAt : Int;
+    id : Nat;
+    image : ?Text;
+    interestedCount : Nat;
+    likeCount : Nat;
+    location : ?Location__298141989;
+    price : ?Nat;
+    projectId : ?Nat;
+    saveCount : Nat;
+    shareCount : Nat
+  };
+type ProjectStatus__111682793 = {#completed; #new; #ongoing};
+type ProjectStatus__679268931 = {#completed; #new; #ongoing};
+type Project__246066733 =
+  {
+    coordinates : Coordinates__987271280;
+    createdAt : Int;
+    houseTypes : [Text];
+    id : Nat;
+    images : [Text];
+    location : Location__298141989;
+    name : Text;
+    projectStatus : ProjectStatus__679268931;
+    promotions : [Text];
+    reviewRating : Float;
+    startingPrice : Nat;
+    unitCount : Nat;
+    unitStatus : UnitStatus__915427631;
+    verificationStatus : VerificationStatus__644366099;
+    video : ?Text
+  };
+type Project__614212307 =
+  {
+    coordinates : Coordinates__1064770659;
+    createdAt : Timestamp__301639476;
+    houseTypes : [Text];
+    id : Nat;
+    images : [Text];
+    location : Location__847735819;
+    name : Text;
+    projectStatus : ProjectStatus__111682793;
+    promotions : [Text];
+    reviewRating : Float;
+    startingPrice : Nat;
+    unitCount : Nat;
+    unitStatus : UnitStatus__1007040637;
+    verificationStatus : VerificationStatus__1042146990;
+    video : ?Text
+  };
+type RatingCategory__1011895668 =
+  {
+    followUp : Nat;
+    info : Nat;
+    politeness : Nat;
+    service : Nat;
+    speed : Nat;
+    trust : Nat
+  };
+type RatingCategory__185711958 =
+  {
+    followUp : Nat;
+    info : Nat;
+    politeness : Nat;
+    service : Nat;
+    speed : Nat;
+    trust : Nat
+  };
+type Review__283627580 =
+  {
+    agentId : Nat;
+    categories : RatingCategory__1011895668;
+    comment : Text;
+    createdAt : Int;
+    id : Nat;
+    rating : Nat;
+    reported : Bool;
+    reviewerId : Principal
+  };
+type Review__513345496 =
+  {
+    agentId : Nat;
+    categories : RatingCategory__185711958;
+    comment : Text;
+    createdAt : Timestamp__301639476;
+    id : Nat;
+    rating : Nat;
+    reported : Bool;
+    reviewerId : UserId__158757552
+  };
+type Timestamp__301639476 = Int;
+type UnitStatus__1007040637 = {#available; #reserved; #sold};
+type UnitStatus__915427631 = {#available; #reserved; #sold};
+type UserId__158757552 = Principal;
+type UserRole__91647283 = {#admin; #guest; #user};
+type VerificationStatus__1042146990 = {#none; #official; #verified};
+type VerificationStatus__644366099 = {#none; #official; #verified};
+{
+  "20260912_010000" : (_old : OldActor__198916528) -> NewActor__643105068
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__386906547<Principal, UserRole__91647283>
+    };
+  stable agents :
+    {
+      var root : Node__430031793<Nat, Agent__113294022>;
+      var size : Nat__58649523
+    };
+  stable appointments :
+    {
+      var root : Node__430031793<Nat, Appointment__77617247>;
+      var size : Nat__58649523
+    };
+  stable favorites :
+    {
+      var root : Node__430031793<Principal, Favorite__263231092>;
+      var size : Nat__58649523
+    };
+  stable houses :
+    {
+      var root : Node__430031793<Nat, House__158392516>;
+      var size : Nat__58649523
+    };
+  stable notifications :
+    {
+      var root : Node__430031793<Nat, Notification__264708741>;
+      var size : Nat__58649523
+    };
+  stable posts :
+    {
+      var root : Node__430031793<Nat, Post__495728462>;
+      var size : Nat__58649523
+    };
+  stable projects :
+    {
+      var root : Node__430031793<Nat, Project__614212307>;
+      var size : Nat__58649523
+    };
+  stable reviews :
+    {
+      var root : Node__430031793<Nat, Review__513345496>;
+      var size : Nat__58649523
+    };
+  stable state :
+    {
+      var nextAgentId : Nat;
+      var nextAppointmentId : Nat;
+      var nextHouseId : Nat;
+      var nextNotificationId : Nat;
+      var nextPostId : Nat;
+      var nextProjectId : Nat;
+      var nextReviewId : Nat
+    }
+};
